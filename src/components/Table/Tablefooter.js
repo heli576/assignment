@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TableFooter, TablePagination, TableRow } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
@@ -12,11 +12,18 @@ const Tablefooter = ({rows, page, rowsPerPage, setPage, setRowsPerPage}) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const optionsList = () => {
+    var list = []
+    list.push({label:'All',value:-1});
+    for(var i = 1;i<=100;i++) list.push({label:i,value:i});
+    return list;
+  }
     return (
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={optionsList()}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}

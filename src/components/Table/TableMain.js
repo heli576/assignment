@@ -22,12 +22,12 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const TableMain = ({users, page, rowsPerPage}) => {
        const [items, setItems] = useState([]);
-      
+    
         // get color based on status
         const getColor = (status) => {
-            if(status == "Active") return "success";
-            else if(status == "Blocked") return "error";
-            else if(status=="Pending") return "primary";
+            if(status === "Active") return "success";
+            else if(status === "Blocked") return "error";
+            else if(status==="Pending") return "primary";
             return "secondary";
         }
     
@@ -47,13 +47,14 @@ const TableMain = ({users, page, rowsPerPage}) => {
 
         useEffect(()=>{
             setItems(users);
-            rowsPerPage > 0
-            ? setItems(users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
+            parseInt(rowsPerPage) > 0
+            ? setItems(users.slice(page * parseInt(rowsPerPage), page * parseInt(rowsPerPage) + parseInt(rowsPerPage)))
             : setItems(users);
         },[page, rowsPerPage, users]);
 
+
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
           <TableBody 
@@ -76,7 +77,7 @@ const TableMain = ({users, page, rowsPerPage}) => {
                 <TableCell component="th" scope="row"><Button color = {getColor(u.subscription.status)}>{u.subscription.status}</Button></TableCell>
                 <TableCell component="th" scope="row">{u.gender}</TableCell>
                 <TableCell component="th" scope="row">{u.credit_card.cc_number}</TableCell>
-                <TableCell component="th" scope="row">{u.address.city}</TableCell>
+                <TableCell component="th" scope="row">{u.address.state}</TableCell>
               </TableRow>)}
               </Draggable>
             ))}
